@@ -6,14 +6,28 @@
 """
 
 import sys
-from PyQt5.QtCore import QUrl, Qt
-from PyQt5.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QVBoxLayout, 
-    QHBoxLayout, QPushButton, QLineEdit, QMessageBox,
-    QToolBar, QAction
-)
-from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEngineProfile
-from PyQt5.QtGui import QIcon
+import os
+
+try:
+    from PyQt5.QtCore import QUrl, Qt
+    from PyQt5.QtWidgets import (
+        QApplication, QMainWindow, QWidget, QVBoxLayout, 
+        QHBoxLayout, QPushButton, QLineEdit, QMessageBox,
+        QToolBar, QAction
+    )
+    from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEngineProfile
+    from PyQt5.QtGui import QIcon
+except ImportError as e:
+    print("=" * 60)
+    print("ERROR: Missing required packages!")
+    print("=" * 60)
+    print("\nPlease install required packages by running:")
+    print("  pip install -r requirements.txt")
+    print("\nOr run install.bat")
+    print("\nError details:", str(e))
+    print("=" * 60)
+    input("\nPress Enter to exit...")
+    sys.exit(1)
 
 
 class DouyinHuohuaApp(QMainWindow):
@@ -254,18 +268,33 @@ class DouyinHuohuaApp(QMainWindow):
 
 def main():
     """主函数"""
-    # 启用高DPI支持
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
-    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
-    
-    app = QApplication(sys.argv)
-    app.setApplicationName("抖音续火花助手")
-    
-    # 创建并显示主窗口
-    window = DouyinHuohuaApp()
-    window.show()
-    
-    sys.exit(app.exec_())
+    try:
+        # 启用高DPI支持
+        QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
+        QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
+        
+        app = QApplication(sys.argv)
+        app.setApplicationName("抖音续火花助手")
+        
+        # 创建并显示主窗口
+        window = DouyinHuohuaApp()
+        window.show()
+        
+        sys.exit(app.exec_())
+    except Exception as e:
+        print("=" * 60)
+        print("ERROR: Program failed to start!")
+        print("=" * 60)
+        print("\nError details:", str(e))
+        print("\nPlease make sure:")
+        print("1. All dependencies are installed (run install.bat)")
+        print("2. Python version is 3.7 or higher")
+        print("3. PyQt5 and PyQtWebEngine are properly installed")
+        print("=" * 60)
+        import traceback
+        traceback.print_exc()
+        input("\nPress Enter to exit...")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

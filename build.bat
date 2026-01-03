@@ -1,39 +1,38 @@
 @echo off
-chcp 65001 >nul
 echo =====================================
-echo 抖音续火花助手 - 打包脚本
+echo Douyin Huohua Helper - Build Script
 echo =====================================
 echo.
 
-REM 检查PyInstaller是否安装
+REM Check if PyInstaller is installed
 pip show pyinstaller >nul 2>&1
 if %errorlevel% neq 0 (
-    echo [提示] 正在安装PyInstaller...
+    echo [INFO] Installing PyInstaller...
     pip install pyinstaller
     if %errorlevel% neq 0 (
-        echo [错误] PyInstaller安装失败
+        echo [ERROR] Failed to install PyInstaller
         pause
         exit /b 1
     )
 )
 
-echo [信息] 开始打包应用程序...
+echo [INFO] Starting build process...
 echo.
 
-REM 清理之前的打包文件
+REM Clean previous build files
 if exist "dist" (
-    echo [清理] 删除旧的dist目录...
+    echo [CLEAN] Removing old dist directory...
     rmdir /s /q dist
 )
 if exist "build" (
-    echo [清理] 删除旧的build目录...
+    echo [CLEAN] Removing old build directory...
     rmdir /s /q build
 )
 
-REM 使用PyInstaller打包
-echo [打包] 正在使用PyInstaller打包...
+REM Build with PyInstaller
+echo [BUILD] Building with PyInstaller...
 pyinstaller --clean ^
-    --name="抖音续火花助手" ^
+    --name="DouyinHuohua" ^
     --windowed ^
     --onefile ^
     --icon=NONE ^
@@ -42,19 +41,19 @@ pyinstaller --clean ^
 
 if %errorlevel% neq 0 (
     echo.
-    echo [错误] 打包失败
+    echo [ERROR] Build failed
     pause
     exit /b 1
 )
 
 echo.
 echo =====================================
-echo [成功] 打包完成！
+echo [SUCCESS] Build completed!
 echo =====================================
 echo.
-echo 可执行文件位置: dist\抖音续火花助手.exe
+echo Executable location: dist\DouyinHuohua.exe
 echo.
-echo 您可以将 dist 文件夹中的 exe 文件分发给其他用户使用
+echo You can distribute the exe file to other users
 echo.
 
 pause
